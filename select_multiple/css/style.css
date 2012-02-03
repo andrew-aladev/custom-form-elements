@@ -1,0 +1,12 @@
+.select_multiple ul {
+	margin: 0; padding: 0; list-style-type: none;
+}
+.select_multiple ul {
+	overflow: auto;
+}
+.select_multiple ul li {
+	cursor: pointer;
+}
+.select_multiple ul li.active {
+	background-color: #bbbbbb;
+}

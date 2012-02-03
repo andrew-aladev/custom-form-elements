@@ -1,0 +1,10 @@
+licensed under GPL v3
+
+If you need to customize any form elements on your page you should:
+1) wrap form element and hide it
+2) append custom structure to wrapper
+3) implement similar behaviour to the form element
+4) forward all events from custom structure to hidden form element
+
+implemented:
+1. select multiple
