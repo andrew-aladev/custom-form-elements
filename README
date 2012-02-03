@@ -1,4 +1,4 @@
-licensed under GPL v3
+licensed under MIT
 
 If you need to customize any form elements on your page you should:
 1) wrap form element and hide it
