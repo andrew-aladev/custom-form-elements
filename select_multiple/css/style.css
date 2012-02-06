@@ -1,8 +1,5 @@
 .select_multiple ul {
-	margin: 0; padding: 0; list-style-type: none;
-}
-.select_multiple ul {
-	overflow: auto;
+	margin: 0; padding: 0; list-style-type: none; overflow: auto; position: relative;
 }
 .select_multiple ul li {
 	cursor: pointer;

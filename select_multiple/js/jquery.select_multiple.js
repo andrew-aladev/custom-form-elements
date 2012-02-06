@@ -49,6 +49,7 @@
 				item.text($(this).text());
 			});
 			this.all_items = this.list.find(this.options.sels.item);
+			this.scrolled_to_index = 0;
 			
 			this.init();
 		},
@@ -98,7 +99,8 @@
 				return false;
 			});
 			
-			$(document).bind("keydown", "shift+up", function() {
+			$(document).bind("keydown", "shift+up", function(event) {
+				event.preventDefault();
 				if(!instance.state_focus) {
 					return;
 				}
@@ -116,7 +118,8 @@
 					instance.select.trigger("change");
 				}
 			});
-			$(document).bind("keydown", "shift+down", function() {
+			$(document).bind("keydown", "shift+down", function(event) {
+				event.preventDefault();
 				if(!instance.state_focus) {
 					return;
 				}
@@ -134,7 +137,8 @@
 					instance.select.trigger("change");
 				}
 			});
-			$(document).bind("keydown", "up", function() {
+			$(document).bind("keydown", "up", function(event) {
+				event.preventDefault();
 				if(!instance.state_focus) {
 					return;
 				}
@@ -150,7 +154,8 @@
 				instance.scroll_list_to(instance.current_index);
 				instance.store_active();
 			});
-			$(document).bind("keydown", "down", function() {
+			$(document).bind("keydown", "down", function(event) {
+				event.preventDefault();
 				if(!instance.state_focus) {
 					return;
 				}
@@ -264,7 +269,18 @@
 		},
 		
 		scroll_list_to: function(index) {
-			this.list.scrollTo(this.all_items.eq(index));
+			var current = this.all_items.eq(index);
+			//if current is not in visible part
+			if (current.position().top < 0) {
+				this.scrolled_to_index = index;
+				this.list.scrollTo(this.all_items.eq(this.scrolled_to_index));
+			} else if(current.position().top + current.height() > this.list.height()) {
+				this.scrolled_to_index++;
+				if(this.scrolled_to_index >= this.all_items.size()) {
+					this.scrolled_to_index = this.all_items.size() - 1;
+				}
+				this.list.scrollTo(this.all_items.eq(this.scrolled_to_index));
+			}
 		},
 		
 		store_active: function() {
