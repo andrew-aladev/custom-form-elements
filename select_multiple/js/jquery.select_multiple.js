@@ -49,7 +49,6 @@
 				item.text($(this).text());
 			});
 			this.all_items = this.list.find(this.options.sels.item);
-			this.scrolled_to_index = 0;
 			
 			this.init();
 		},
@@ -74,10 +73,12 @@
 				if(event.shiftKey) {
 					count = index - instance.current_index;
 					instance.selection(instance.current_index, count);
+					instance.scroll_list_to(instance.current_index + count);
 					instance.store_active();
 				} else if(event.ctrlKey) {
 					instance.toggle(index);
 					instance.current_index = instance.select.find("option:selected").first().index();
+					instance.scroll_list_to(index);
 					instance.store_active();
 				} else {
 					var change = false;
@@ -92,6 +93,7 @@
 						instance.select.trigger("change");
 					}
 					instance.current_index = index;
+					instance.scroll_list_to(instance.current_index);
 					instance.store_active();
 				}
 			}).bind("selectstart dragstart", function(event) {
@@ -275,6 +277,14 @@
 				this.scrolled_to_index = index;
 				this.list.scrollTo(this.all_items.eq(this.scrolled_to_index));
 			} else if(current.position().top + current.height() > this.list.height()) {
+				var instance = this;
+				var index_not_founded = true;
+				this.all_items.each(function(index) {
+					if(index_not_founded && $(this).position().top >= 0) {
+						instance.scrolled_to_index = index;
+						index_not_founded = false;
+					}
+				});
 				this.scrolled_to_index++;
 				if(this.scrolled_to_index >= this.all_items.size()) {
 					this.scrolled_to_index = this.all_items.size() - 1;
