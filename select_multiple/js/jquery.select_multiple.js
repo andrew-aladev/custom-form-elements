@@ -11,6 +11,22 @@
 		};
 	}
 	
+	if(window.ValidatorOnChange && $.browser.msie) {
+		var indians_ValidatorHookupEvent = window.ValidatorHookupEvent;
+		window.ValidatorHookupEvent = function(control, eventType, functionPrefix) {
+			if(functionPrefix.indexOf("ValidatorOnChange") == -1) {
+				return indians_ValidatorHookupEvent.apply(this, arguments);
+			} else {
+				$(control).bind("change", function() {
+					ValidatorOnChange({
+						target: this
+					});
+				});
+			}
+			return null;
+		}
+	}
+	
 	$.widget("ui.SelectMultiple", {
 		options: {
 			sels: {
@@ -90,7 +106,7 @@
 					});
 					change = instance.activate(index) || change;
 					if(change) {
-						instance._trigger_change(instance.select);
+						instance.select.trigger("change");
 					}
 					instance.current_index = index;
 					instance.scroll_list_to(instance.current_index);
@@ -117,7 +133,7 @@
 				change = instance.restore_active() || change;
 				instance.scroll_list_to(instance.current_index + count);
 				if(change) {
-					instance._trigger_change(instance.select);
+					instance.select.trigger("change");
 				}
 			});
 			$(document).bind("keydown", "shift+down", function(event) {
@@ -136,7 +152,7 @@
 				change = instance.restore_active() || change;
 				instance.scroll_list_to(instance.current_index + count);
 				if(change) {
-					instance._trigger_change(instance.select);
+					instance.select.trigger("change");
 				}
 			});
 			$(document).bind("keydown", "up", function(event) {
@@ -267,7 +283,7 @@
 				this.current_index = index;
 			}
 			option.trigger("click");
-			this._trigger_change(this.select);
+			this.select.trigger("change");
 		},
 		
 		scroll_list_to: function(index) {
@@ -309,14 +325,6 @@
 				}
 			}
 			return change;
-		},
-		
-		_trigger_change: function(select) {
-			if(window.ValidatorOnChange && $.browser.msie) {
-				ValidatorOnChange({target: select.get(0)});
-			} else {
-				select.trigger("change");
-			}
 		},
 		
 		destroy: function() {
