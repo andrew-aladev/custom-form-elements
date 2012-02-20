@@ -90,7 +90,7 @@
 					});
 					change = instance.activate(index) || change;
 					if(change) {
-						instance.select.trigger("change");
+						instance._trigger_change(instance.select);
 					}
 					instance.current_index = index;
 					instance.scroll_list_to(instance.current_index);
@@ -117,7 +117,7 @@
 				change = instance.restore_active() || change;
 				instance.scroll_list_to(instance.current_index + count);
 				if(change) {
-					instance.select.trigger("change");
+					instance._trigger_change(instance.select);
 				}
 			});
 			$(document).bind("keydown", "shift+down", function(event) {
@@ -136,7 +136,7 @@
 				change = instance.restore_active() || change;
 				instance.scroll_list_to(instance.current_index + count);
 				if(change) {
-					instance.select.trigger("change");
+					instance._trigger_change(instance.select);
 				}
 			});
 			$(document).bind("keydown", "up", function(event) {
@@ -267,7 +267,7 @@
 				this.current_index = index;
 			}
 			option.trigger("click");
-			this.select.trigger("change");
+			this._trigger_change(this.select);
 		},
 		
 		scroll_list_to: function(index) {
@@ -309,6 +309,17 @@
 				}
 			}
 			return change;
+		},
+		
+		_trigger_change: function(select) {
+			if(window.ValidatorOnChange != undefined && $.browser.msie) {
+				var event = document.createEvent("HTMLEvents");
+				event.initEvent("change", true, true);
+				event.target = select.get(0);
+				ValidatorOnChange(event);
+			} else {
+				select.trigger("change");
+			}
 		},
 		
 		destroy: function() {
