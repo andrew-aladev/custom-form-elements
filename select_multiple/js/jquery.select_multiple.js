@@ -312,11 +312,8 @@
 		},
 		
 		_trigger_change: function(select) {
-			if(window.ValidatorOnChange != undefined && $.browser.msie) {
-				var event = document.createEvent("HTMLEvents");
-				event.initEvent("change", true, true);
-				event.target = select.get(0);
-				ValidatorOnChange(event);
+			if(window.ValidatorOnChange && $.browser.msie) {
+				ValidatorOnChange({target: select.get(0)});
 			} else {
 				select.trigger("change");
 			}
