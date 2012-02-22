@@ -1,0 +1,30 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<title>select</title>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8"/> 
+
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js"></script>
+		<script type="text/javascript" src="js/jquery.select.js"></script>
+		<script type="text/javascript">
+			(function($) {
+				$(document).ready(function() {
+					$("select:not([multiple])").Select();
+				});
+			})(jQuery);
+		</script>
+
+		<link media="screen" href="css/style.css" type="text/css" rel="stylesheet"/>
+	</head>
+	<body>
+		<form>
+			<select>
+				<option value="1">puch</option>
+				<option value="2">puch</option>
+				<option value="3">punya</option>
+				<option value="4">punya</option>
+			</select>
+		</form>
+	</body>
+</html>

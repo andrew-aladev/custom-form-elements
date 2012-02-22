@@ -11,22 +11,6 @@
 		};
 	}
 	
-	if(window.ValidatorOnChange && $.browser.msie) {
-		var indians_ValidatorHookupEvent = window.ValidatorHookupEvent;
-		window.ValidatorHookupEvent = function(control, eventType, functionPrefix) {
-			if(functionPrefix.indexOf("ValidatorOnChange") == -1) {
-				return indians_ValidatorHookupEvent.apply(this, arguments);
-			} else {
-				$(control).bind("change", function() {
-					ValidatorOnChange({
-						target: this
-					});
-				});
-			}
-			return null;
-		}
-	}
-	
 	$.widget("ui.SelectMultiple", {
 		options: {
 			sels: {

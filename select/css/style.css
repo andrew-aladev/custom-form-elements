@@ -1,0 +1,12 @@
+.select {
+	position: relative; margin-left: 100px; width: 200px;
+}
+.select .result {
+	position: absolute; right: 0; width: 120px; height: 20px; line-height: 20px; background: #eee; cursor: pointer;
+}
+.select ul {
+	margin: 0; padding: 0; position: absolute; top: 20px; right: 0; min-width: 150px; background: #ddd;
+}
+.select ul li {
+	list-style-type: none; cursor: pointer;
+}
